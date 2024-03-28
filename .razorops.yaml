@@ -1,13 +1,43 @@
+name: CI Workflow
 
-tasks:
-  run-test:
+on: [pull_request]
+
+jobs:
+  unit_tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
     steps:
-    - checkout
-    - cache/pull:
-        key: npm-cache-{{ checksum "package-lock.json" }}
-    - run:  npm ci
-    - cache/push:
-        key: npm-cache-{{ checksum "package-lock.json" }}
-        paths:
-        - node_modules
-    - run: npm test
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install
+        run: npm ci
+      - name: Run Unit Tests
+        run: npm run test:unit
+
+  integration_tests:
+    name: Run Integration Tests
+    runs-on: ubuntu-latest
+    needs: unit_tests
+
+    strategy:
+    matrix:
+      node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install
+        run: npm ci
+      - name: Run Integration Tests
+        run: npm run test:integration
