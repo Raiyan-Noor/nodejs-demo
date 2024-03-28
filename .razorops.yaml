@@ -1,12 +1,3 @@
-tasks:
-  build-image:
-    steps:
-      - checkout
-      - docker/build:
-          image: razorci/docs
-          push: true
-          tags: ["${CI_COMMIT_SHA}", "latest"]
-          dockerfile: Dockerfile
-          context: .
-          args:
-            - API_TOKEN=foobar
+global:
+  runner:
+    os_image: ubuntu
