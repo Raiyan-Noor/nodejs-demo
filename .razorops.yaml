@@ -1,17 +1,14 @@
 global:
-  runner: 
+  runner:
     # use ubuntu VM
     os_image: ubuntu
-    # starts postgrses container in background and exposes the ports 
-    # locally at localhost:5432
+    # starts redis container in background and exposes the ports
+    # locally at localhost:6379
     containers:
-    - image: postgres
-      environment:
-      - POSTGRES_PASSWORD=secret
+      - image: redis
 
-tasks:  
+tasks:
   test: ## task name
     steps:
-    # test connect
-    - run: dockerize -wait tcp://localhost:5432
-    ...
+      # Ping test
+      - run: (printf "PING\r\n";) | nc localhost 6379
