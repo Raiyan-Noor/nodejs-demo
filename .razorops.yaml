@@ -12,3 +12,4 @@ tasks:
     steps:
       # Ping test
       - run: ls -la
+      - run: sleep 10
