@@ -11,4 +11,4 @@ tasks:
   test: ## task name
     steps:
       # Ping test
-      - run: npm ci
+      - run: ls -la
