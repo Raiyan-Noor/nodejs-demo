@@ -11,5 +11,7 @@ tasks:
   test: ## task name
     steps:
       # Ping test
-      - run: ls -la
-      - run: sleep 10
+      - run: git clone https://github.com/Raiyan-Noor/nodejs-demo.git
+      - run: cd nodejs-demo
+      - run: npm ci
+      - run: npm run test
