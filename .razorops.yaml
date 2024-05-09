@@ -5,10 +5,10 @@ global:
     # starts redis container in background and exposes the ports
     # locally at localhost:6379
     containers:
-      - image: redis
+      - image: razorci/node
 
 tasks:
   test: ## task name
     steps:
       # Ping test
-      - run: (printf "PING\r\n";) | nc localhost 6379
+      - run: npm ci
